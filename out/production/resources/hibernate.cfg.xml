@@ -10,7 +10,7 @@
 
         <!-- Assume test is the database name -->
         <property name="hibernate.connection.url">
-            jdbc:postgresql://localhost:55000/postgres
+            jdbc:postgresql://localhost:55001/postgres
         </property>
         <property name="hibernate.connection.username">
             postgres
@@ -21,7 +21,10 @@
         <property name="hibernate.dialect">
             org.hibernate.dialect.PostgreSQLDialect
         </property>
-
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="hibernate.default_schema">information_schema</property>
+        <mapping class="com.Hibernate.Users"/>
 
 
     </session-factory>

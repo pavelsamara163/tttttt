@@ -29,15 +29,15 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="9dda30d9-4085-45d3-ba97-cffe4d4adc45">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[create table test_user (
-username varchar(28) primary  key,
- age int
+      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[create table Users (
+groupname varchar(28) primary  key,
+employees int
  );
-insert into test_user(username,age)
-values ('Syatkin',22)
+insert into users(groupname,employees)
+values ('Домен : ПУ.Аварий24x7',33)
 ;
 
-select * from test_user;]]></console>
+select * from users--group_employees;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -87,7 +87,7 @@ select * from test_user;]]></console>
           <driver value="" />
           <url-type value="DATABASE" />
           <host value="localhost" />
-          <port value="55000" />
+          <port value="55001" />
           <database value="postgres" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />

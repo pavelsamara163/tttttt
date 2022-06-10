@@ -1,8 +1,11 @@
 
+import com.Hibernate.HibernateConnection;
+import com.Hibernate.Users;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Group_test_nx  extends  testJava_nx_class{
+public class Group_test_nx  extends HibernateConnection {
     private static String group = "Домен Продукты и Услуги";
     private static int group_emp = 10;
     private static String group1 = "Домен ПУ";
@@ -83,14 +86,16 @@ public class Group_test_nx  extends  testJava_nx_class{
     }
 
     public static void main(String[] args) {
+         HibernateConnection hibernateConnection = new HibernateConnection();
 /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Домен : " + group);
         System.out.print("Введите кол-во сотрудников " ) ; emploees = Integer.parseInt(scanner.nextLine());
         System.out.println("В " + group + ". Кол-во сотрудников : "+ emploees);
         */
-        //Метод вызова название группы
-        //System.out.println("1) " + getGroup());
+         //Метод вызова название группы
+        
+         System.out.println("1) " + getGroup());
         //Метод замены названия групп
         // setGroup("2) " + "Была группа = " + getGroup() + ",а  заменяем на " + group1);
         //Метод вызова всех групп
