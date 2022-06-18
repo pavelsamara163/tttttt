@@ -87,7 +87,7 @@ select * from users--group_employees;]]></console>
           <driver value="" />
           <url-type value="DATABASE" />
           <host value="localhost" />
-          <port value="55001" />
+          <port value="55000" />
           <database value="postgres" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />
