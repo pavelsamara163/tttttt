@@ -29,14 +29,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="9dda30d9-4085-45d3-ba97-cffe4d4adc45">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[create table Users (
-groupname varchar(28) primary  key,
-employees int
+      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[create table Users (id bigserial,
+groupname varchar(28)  ,
+employees int,primary key (id)
  );
 insert into users(groupname,employees)
-values ('Домен : ПУ.Аварий24x7',33)
+values ('Доменег–24x7',33)
 ;
-
+ 
 select * from users--group_employees;]]></console>
     </connection>
   </component>
@@ -537,7 +537,7 @@ select * from users--group_employees;]]></console>
       <regional-settings>
         <date-format value="MEDIUM" />
         <number-format value="UNGROUPED" />
-        <locale value="SYSTEM_DEFAULT" />
+        <locale value="en_GB" />
         <use-custom-formats value="false" />
       </regional-settings>
       <environment>

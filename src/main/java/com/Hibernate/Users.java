@@ -1,9 +1,6 @@
 package com.Hibernate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,15 +11,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-//@Table(name = "users",schema = "public")
+@Table(name = "users")
 public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "groupname")
     private String groupname;
+    @Column(name = "employees")
     private int employees;
-  //  @Column(name = "groupname",name = "")
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getGroupname() {
-
         return groupname;
     }
 
@@ -36,5 +45,9 @@ public class Users {
 
     public void setEmployees(int employees) {
         this.employees = employees;
+    }
+
+    public String toString(){
+        return String.format("Users[id = %d, groupname = %s, employees = %d" ,id,groupname,employees);
     }
 }
