@@ -25,6 +25,7 @@
         <property name="format_sql">true</property>
         <property name="hibernate.default_schema">information_schema</property>
         <mapping class="com.Hibernate.Users"/>
+        <mapping class="com.Hibernate.GroupPU"/>
 
 
     </session-factory>

@@ -93,17 +93,17 @@ public class Group_test_nx  extends HibernateConnection {
         System.out.print("Введите кол-во сотрудников " ) ; emploees = Integer.parseInt(scanner.nextLine());
         System.out.println("В " + group + ". Кол-во сотрудников : "+ emploees);
         */
-         //Метод вызова название группы
-        
-         System.out.println("1) " + getGroup());
+
+         //Метод вызова название групп
+        // System.out.println("1) " + getGroup());
         //Метод замены названия групп
-        // setGroup("2) " + "Была группа = " + getGroup() + ",а  заменяем на " + group1);
+         // setGroup("2) " + "Была группа = " + getGroup() + ",а  заменяем на " + group1);
         //Метод вызова всех групп
-        // allGroup();
+         //allGroup();
         //Метод для получения кол-во сотрудников группы по её названию
         //emploeesName_Group(group);
         // Метод для модификации значения кол-во сотрудников группы по её названию
-        // modifEmploeesName_Group(group,115);
+        modifEmploeesName_Group(group,115);
          //modifEmploeesName_Group(group1,225);
         // modifEmploeesName_Group(group2,335);
 

@@ -5,19 +5,34 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.concurrent.BlockingDeque;
+import java.util.List;
 
 public class HibernateConnection {
     private String groups;
     private int emp;
+
     public static void main(String[] args) throws SQLException {
-        //Метод вызывающий записи из таблицы
-           // getGroup();
-            //Метод вставляющий записи в таблицу
-           setGroup("Саdsыыылют",224 );
+
+        //Метод вызывающий название отдела по ID записи из таблицы
+        //getGroup(12);
+        //Метод вставляющий запись  в таблицу Users (id,название отдела,кол-во сотрудников)
+        // setGroup("Privet",4211 );
+        // Метод для модификации названия отдела - поиск отдела по ID;
+        //  setGroupName("Donon",12);
+        // Метод для модификации   названия группы (пункт 6) из вложенного класса;
+         // InnerGroup.setGroupPuName("VsegO_HoroShegO",1);
+         //Метод, возвращающий массив названий всех групп;
+          //  InnerGroup.getGroupPuNameAll();
+        // Метод для получения кол-во сотрудников в группе по её названию;
+           // InnerGroup.getGroupPuName("Domen_pelmen");
+            //Метод для модификации значения кол-во сотрудников группы по её названию;
+            //InnerGroup.setEmpForGroupPuName("Domen_pelmen",54);
+        //Метод, возвращающий массив кол-ва сотрудников группы;
+       // InnerGroup.getGroupPuEmpAll();
+
+
+
 
 
     /* Configuration configuration = new Configuration();
@@ -28,7 +43,7 @@ public class HibernateConnection {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
                 session.beginTransaction();*/
-            //Вставка в таблицу
+        //Вставка в таблицу
           /*  Users build = Users.builder()
                     .groupname("Домен :Привет ")
                     .employees(23)
@@ -39,17 +54,16 @@ public class HibernateConnection {
 
             session.getTransaction().commit();*/
 
-           // Users users = Users.builder().groupname("Домен : ПУ.Аварий24x7").build() ;
-           // System.out.println(users);
-           // session.getTransaction().commit();
-           // sessionFactory.close();
-
-
+        // Users users = Users.builder().groupname("Домен : ПУ.Аварий24x7").build() ;
+        // System.out.println(users);
+        // session.getTransaction().commit();
+        // sessionFactory.close();
 
 
     }
-            ////Достаем записи из таблицы
-    static void getGroup() {
+
+    ////Достаем записи из таблицы
+    static void getGroup(int id) {
         Configuration configuration = new Configuration();
         configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
         configuration.configure();
@@ -57,20 +71,21 @@ public class HibernateConnection {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Users usersGetBD = session.get(Users.class, 1L);
+            Users usersGetBD = session.get(Users.class, id);
             System.out.println(usersGetBD);
             session.getTransaction().commit();
             session.close();
 
         }
     }
-        static void setGroup(String group,int emp) {
-               String a =  group ;
-               int b = emp;
 
-            Configuration configuration = new Configuration();
-            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-            configuration.configure();
+    static void setGroup(String group, int emp) {
+        String a = group;
+        int b = emp;
+
+        Configuration configuration = new Configuration();
+        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+        configuration.configure();
 
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -88,6 +103,132 @@ public class HibernateConnection {
             session.getTransaction().commit();
         }
     }
+
+    static void setGroupName(String groupName, int id) {
+        Configuration configuration = new Configuration();
+        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+        configuration.configure();
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            //Изменение названия отдела по ID
+            Users users = session.get(Users.class, id);
+            System.out.println("Было - " + users);
+            users.setGroupname(groupName);
+
+            System.out.println("Стало " + users);
+
+            session.getTransaction().commit();
+            sessionFactory.close();
+        }
+    }
+    static class InnerGroup {
+        String nameInnerGroup;
+        int empInnerGroup;
+
+        public InnerGroup() {
+
+        }
+        public InnerGroup(String [] allGroup) {
+
+        }
+
+
+        static void setGroupPuName(String groupName, int id) {
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                //Изменение названия отдела по ID
+                GroupPU groupPU = session.get(GroupPU.class, id);
+                System.out.println("Было - " + groupPU);
+                groupPU.setGroupname(groupName);
+
+                System.out.println("Стало " + groupName);
+
+                session.getTransaction().commit();
+                sessionFactory.close();
+            }
+        }
+            static void getGroupPuNameAll() {
+
+                Configuration configuration = new Configuration();
+                configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+                configuration.configure();
+                try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                     Session session = sessionFactory.openSession()) {
+                    session.beginTransaction();
+                    //Вывод всех групп через массив
+                    List<GroupPU> groupPU = session.createQuery("SELECT groupname FROM GroupPU pu ",GroupPU.class).getResultList();
+
+                    System.out.println(groupPU);
+                    session.getTransaction().commit();
+                    sessionFactory.close();
+                }
+
+        }
+        static void getGroupPuName(String nameInnerGroup ) {
+
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                //GroupPU groupPU = session.get(GroupPU.class, nameInnerGroup);
+                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ",GroupPU.class)
+                        .setParameter("groupname",nameInnerGroup)
+                        .getSingleResult();
+                System.out.println(groupPU.getEmployees());
+                session.getTransaction().commit();
+                session.close();
+
+            }
+
+        }
+        static void setEmpForGroupPuName(String nameInnerGroup,int empInnerGroup) {
+
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ",GroupPU.class)
+                        .setParameter("groupname",nameInnerGroup)
+                        .getSingleResult();
+                System.out.println("Было " + groupPU);
+                groupPU.setEmployees(empInnerGroup);
+                System.out.println("Стало " + groupPU);
+                session.getTransaction().commit();
+                session.close();
+
+            }
+
+        }
+        static void getGroupPuEmpAll() {
+
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                //Вывод всех групп через массив
+                List<GroupPU> groupPU = session.createQuery("SELECT employees FROM GroupPU pu ",GroupPU.class).getResultList();
+
+                System.out.println(groupPU);
+                session.getTransaction().commit();
+                sessionFactory.close();
+            }
+
+        }
+
+    }
+
 }
 
 

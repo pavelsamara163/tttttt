@@ -29,15 +29,30 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="9dda30d9-4085-45d3-ba97-cffe4d4adc45">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[create table Users (id bigserial,
+      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[--Таблица USers id/название отдела/кол-во сотрудников
+create table Users (id bigserial,
 groupname varchar(28)  ,
 employees int,primary key (id)
  );
+ --Таблица USers id/название отдела/кол-во сотрудников
+create table group_pu (id bigserial,
+groupname varchar(38)  ,
+employees int,primary key (id)
+ ) CHARACTER SET=utf8 ;
+ 
 insert into users(groupname,employees)
 values ('Доменег–24x7',33)
 ;
+ --id/название отдела/кол-во сотрудников
+select * from group_pu--group_employees;
+--id/название группы / кол-во сотрудников
  
-select * from users--group_employees;]]></console>
+
+insert into group_pu(groupname,employees)
+values ('Domen_pelmen',41)
+; 
+
+SELECT   employees,sum(employees) FROM group_pu where 1=1 and group by employees]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

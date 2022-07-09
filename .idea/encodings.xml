@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with BOM">
+    <file url="db://9dda30d9-4085-45d3-ba97-cffe4d4adc45/consoles/Connection" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/Group_test_nx.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Hibernate/HibernateConnection.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/testJava_nx_class.java" charset="windows-1251" />
