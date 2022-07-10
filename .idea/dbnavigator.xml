@@ -34,7 +34,7 @@ create table Users (id bigserial,
 groupname varchar(28)  ,
 employees int,primary key (id)
  );
- --Таблица USers id/название отдела/кол-во сотрудников
+ --Таблица GroupPU id/название отдела/кол-во сотрудников
 create table group_pu (id bigserial,
 groupname varchar(38)  ,
 employees int,primary key (id)
@@ -47,12 +47,11 @@ values ('Доменег–24x7',33)
 select * from group_pu--group_employees;
 --id/название группы / кол-во сотрудников
  
-
 insert into group_pu(groupname,employees)
 values ('Domen_pelmen',41)
 ; 
 
-SELECT   employees,sum(employees) FROM group_pu where 1=1 and group by employees]]></console>
+SELECT    groupname,employees FROM group_pu where 1=1 limit 1]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

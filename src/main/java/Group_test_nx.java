@@ -1,9 +1,7 @@
 
 import com.Hibernate.HibernateConnection;
-import com.Hibernate.Users;
 
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Group_test_nx  extends HibernateConnection {
     private static String group = "Домен Продукты и Услуги";
@@ -18,7 +16,7 @@ public class Group_test_nx  extends HibernateConnection {
 
 
 
-    public   Group_test_nx(String [] a) {
+    public   Group_test_nx( ) {
 
     }
 
@@ -84,9 +82,46 @@ public class Group_test_nx  extends HibernateConnection {
 
 
     }
+    //10)метод, возвращающий массив кол-ва сотрудников группы;
+      int[] returnArraySumEmpGroup (String groupName){
+        int[] name = {group_emp, group_emp1, group_emp2};
+
+        if (groupName == group ){
+            System.out.println(group + " . "  + " Кол-во сотрудников : " + group_emp );
+
+        } else if (groupName == group1 ){
+            System.out.println(group1 + " . "  + " Кол-во сотрудников : " + group_emp1 );
+
+        }else if (groupName == group2 ){
+            System.out.println(group2 + " . "  + " Кол-во сотрудников : " + group_emp2 );
+
+        }
+
+
+          return name;
+      }
+      //11 метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
+       static void modifEmpAndNames_Group (String a,int b){
+               String[] name_group = new String[]{group, group1, group2};
+               int[] emp_group = new int[]{group_emp, group_emp1, group_emp2};
+               //new
+               String [] new_name_group = Arrays.copyOf(name_group,name_group.length+1);
+               int[] new_emp_group = Arrays.copyOf(emp_group,emp_group.length+1);
+
+               int i_name_group = new_name_group.length-1;
+               int s_emp_group = new_emp_group.length-1;
+
+               new_name_group[i_name_group]  = a ;
+               new_emp_group[s_emp_group] = b;
+
+                System.out.println(Arrays.toString(new_name_group));
+                System.out.println(Arrays.toString(new_emp_group));
+
+    }
 
     public static void main(String[] args) {
-         HibernateConnection hibernateConnection = new HibernateConnection();
+        Group_test_nx group_test_nx = new Group_test_nx();
+
 /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Домен : " + group);
@@ -94,18 +129,23 @@ public class Group_test_nx  extends HibernateConnection {
         System.out.println("В " + group + ". Кол-во сотрудников : "+ emploees);
         */
 
-         //Метод вызова название групп
+        //Метод вызова название групп
         // System.out.println("1) " + getGroup());
         //Метод замены названия групп
-         // setGroup("2) " + "Была группа = " + getGroup() + ",а  заменяем на " + group1);
+        // setGroup("2) " + "Была группа = " + getGroup() + ",а  заменяем на " + group1);
         //Метод вызова всех групп
-         //allGroup();
+        //allGroup();
         //Метод для получения кол-во сотрудников группы по её названию
         //emploeesName_Group(group);
         // Метод для модификации значения кол-во сотрудников группы по её названию
-        modifEmploeesName_Group(group,115);
-         //modifEmploeesName_Group(group1,225);
+        // modifEmploeesName_Group(group,115);
+        //modifEmploeesName_Group(group1,225);
         // modifEmploeesName_Group(group2,335);
+        //10)метод, возвращающий массив кол-ва сотрудников группы;
+        //group_test_nx.returnArraySumEmpGroup(group1);
+        //11)метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
+         //modifEmpAndNames_Group("Privet_medved",231);
+
 
 
 

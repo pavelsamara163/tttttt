@@ -6,7 +6,7 @@ import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 public class HibernateConnection {
     private String groups;
@@ -30,7 +30,8 @@ public class HibernateConnection {
             //InnerGroup.setEmpForGroupPuName("Domen_pelmen",54);
         //Метод, возвращающий массив кол-ва сотрудников группы;
        // InnerGroup.getGroupPuEmpAll();
-
+        // метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
+            InnerGroup.setGroupPuNameAndEmployes("Domen: PU24x7",65);
 
 
 
@@ -129,7 +130,8 @@ public class HibernateConnection {
         public InnerGroup() {
 
         }
-        public InnerGroup(String [] allGroup) {
+
+        public InnerGroup(String[] allGroup) {
 
         }
 
@@ -152,24 +154,8 @@ public class HibernateConnection {
                 sessionFactory.close();
             }
         }
-            static void getGroupPuNameAll() {
 
-                Configuration configuration = new Configuration();
-                configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-                configuration.configure();
-                try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-                     Session session = sessionFactory.openSession()) {
-                    session.beginTransaction();
-                    //Вывод всех групп через массив
-                    List<GroupPU> groupPU = session.createQuery("SELECT groupname FROM GroupPU pu ",GroupPU.class).getResultList();
-
-                    System.out.println(groupPU);
-                    session.getTransaction().commit();
-                    sessionFactory.close();
-                }
-
-        }
-        static void getGroupPuName(String nameInnerGroup ) {
+        static void getGroupPuNameAll() {
 
             Configuration configuration = new Configuration();
             configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
@@ -177,9 +163,26 @@ public class HibernateConnection {
             try (SessionFactory sessionFactory = configuration.buildSessionFactory();
                  Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
-                //GroupPU groupPU = session.get(GroupPU.class, nameInnerGroup);
-                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ",GroupPU.class)
-                        .setParameter("groupname",nameInnerGroup)
+                //Вывод всех групп через массив
+                List<GroupPU> groupPU = session.createQuery("SELECT groupname FROM GroupPU pu ", GroupPU.class).getResultList();
+
+                System.out.println(groupPU);
+                session.getTransaction().commit();
+                sessionFactory.close();
+            }
+
+        }
+
+        static void getGroupPuName(String nameInnerGroup) {
+
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ", GroupPU.class)
+                        .setParameter("groupname", nameInnerGroup)
                         .getSingleResult();
                 System.out.println(groupPU.getEmployees());
                 session.getTransaction().commit();
@@ -188,7 +191,8 @@ public class HibernateConnection {
             }
 
         }
-        static void setEmpForGroupPuName(String nameInnerGroup,int empInnerGroup) {
+
+        static void setEmpForGroupPuName(String nameInnerGroup, int empInnerGroup) {
 
             Configuration configuration = new Configuration();
             configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
@@ -197,8 +201,8 @@ public class HibernateConnection {
                  Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
 
-                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ",GroupPU.class)
-                        .setParameter("groupname",nameInnerGroup)
+                GroupPU groupPU = session.createQuery("SELECT pu FROM GroupPU pu where pu.groupname = :groupname ", GroupPU.class)
+                        .setParameter("groupname", nameInnerGroup)
                         .getSingleResult();
                 System.out.println("Было " + groupPU);
                 groupPU.setEmployees(empInnerGroup);
@@ -209,6 +213,7 @@ public class HibernateConnection {
             }
 
         }
+
         static void getGroupPuEmpAll() {
 
             Configuration configuration = new Configuration();
@@ -218,7 +223,7 @@ public class HibernateConnection {
                  Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
                 //Вывод всех групп через массив
-                List<GroupPU> groupPU = session.createQuery("SELECT employees FROM GroupPU pu ",GroupPU.class).getResultList();
+                List<GroupPU> groupPU = session.createQuery("SELECT employees FROM GroupPU pu ", GroupPU.class).getResultList();
 
                 System.out.println(groupPU);
                 session.getTransaction().commit();
@@ -227,6 +232,29 @@ public class HibernateConnection {
 
         }
 
+        static void setGroupPuNameAndEmployes( String nameInnerGroup,int empInnerGroup) {
+
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                //Вывод всех групп через массив
+                List<GroupPU> groupPU = session.createQuery("SELECT pu FROM GroupPU pu ", GroupPU.class).getResultList();
+                //Далее вставку производим уже с копией
+                System.out.println("Список через коллекцию GroupPU - " + groupPU );
+                List<GroupPU> copy = new ArrayList<>(groupPU);
+                System.out.println("Список через копию коллекции copy  - " + copy );
+                copy = Collections.singletonList(GroupPU.builder().groupname(nameInnerGroup).employees(empInnerGroup).build());
+                System.out.println("Вставка через копию коллекции -  copy  - " + copy );
+                session.save(copy.get(copy.size()-1));
+
+                session.getTransaction().commit();
+                sessionFactory.close();
+            }
+
+        }
     }
 
 }
