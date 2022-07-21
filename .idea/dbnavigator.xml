@@ -46,9 +46,9 @@ values ('Доменег–24x7',33)
  --id/название отдела/кол-во сотрудников
 select * from group_pu--group_employees;
 --id/название группы / кол-во сотрудников
- 
+ delete from group_pu where employees=65
 insert into group_pu(groupname,employees)
-values ('Domen_pelmen',41)
+values ('DomenPuhly',434)
 ; 
 
 SELECT    groupname,employees FROM group_pu where 1=1 limit 1]]></console>

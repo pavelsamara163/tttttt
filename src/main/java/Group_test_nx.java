@@ -118,6 +118,26 @@ public class Group_test_nx  extends HibernateConnection {
                 System.out.println(Arrays.toString(new_emp_group));
 
     }
+    static void deleteEmpAndNames_Group (String a,int b){
+        String[] name_group = new String[]{group, group1, group2};
+        int[] emp_group = new int[]{group_emp, group_emp1, group_emp2};
+        //new
+        String [] new_name_group = Arrays.copyOf(name_group,name_group.length);
+        int[] new_emp_group = Arrays.copyOf(emp_group,emp_group.length);
+
+        int i_name_group = new_name_group.length;
+        int s_emp_group = new_emp_group.length;
+
+
+        new_name_group[i_name_group]  = a ;
+        new_emp_group[s_emp_group] = b;
+
+        System.arraycopy(name_group,0,emp_group,0,b);
+
+        System.out.println(Arrays.toString(new_name_group));
+        System.out.println(Arrays.toString(new_emp_group));
+
+    }
 
     public static void main(String[] args) {
         Group_test_nx group_test_nx = new Group_test_nx();
@@ -144,9 +164,9 @@ public class Group_test_nx  extends HibernateConnection {
         //10)метод, возвращающий массив кол-ва сотрудников группы;
         //group_test_nx.returnArraySumEmpGroup(group1);
         //11)метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
-         //modifEmpAndNames_Group("Privet_medved",231);
-
-
+         //modifEmpAndNames_Group("Privet_medvDDDD",2231);
+        //12)метод удаления группы с указанием названия и кол-ва сотрудников( с использованием методов System.arraycopy, Arrays.copyOf());
+        deleteEmpAndNames_Group(group,group_emp);
 
 
     }

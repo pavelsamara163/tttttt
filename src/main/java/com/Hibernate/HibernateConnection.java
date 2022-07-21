@@ -27,12 +27,15 @@ public class HibernateConnection {
         // Метод для получения кол-во сотрудников в группе по её названию;
            // InnerGroup.getGroupPuName("Domen_pelmen");
             //Метод для модификации значения кол-во сотрудников группы по её названию;
-            //InnerGroup.setEmpForGroupPuName("Domen_pelmen",54);
+           // InnerGroup.setEmpForGroupPuName("Domen: PU24x7",71);
         //Метод, возвращающий массив кол-ва сотрудников группы;
        // InnerGroup.getGroupPuEmpAll();
         // метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
-            InnerGroup.setGroupPuNameAndEmployes("Domen: PU24x7",65);
-
+          //  InnerGroup.setGroupPuNameAndEmployes("Domen: PU24x7",69);
+        //12)метод удаления группы с указанием названия и кол-ва сотрудников( с использованием методов System.arraycopy, Arrays.copyOf());
+          //  InnerGroup.deleteGroupNameAndEmployees("Domen: PU24x7",65);
+        //13)Метод для получения размера массива Групп.
+       // InnerGroup.massiveGroup();
 
 
 
@@ -241,7 +244,7 @@ public class HibernateConnection {
                  Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
                 //Вывод всех групп через массив
-                List<GroupPU> groupPU = session.createQuery("SELECT pu FROM GroupPU pu ", GroupPU.class).getResultList();
+                List<GroupPU> groupPU = session.createQuery("FROM GroupPU", GroupPU.class).getResultList();
                 //Далее вставку производим уже с копией
                 System.out.println("Список через коллекцию GroupPU - " + groupPU );
                 List<GroupPU> copy = new ArrayList<>(groupPU);
@@ -255,6 +258,45 @@ public class HibernateConnection {
             }
 
         }
+        static void deleteGroupNameAndEmployees(String nameInnerGroup,int empInnerGroup){
+            Configuration configuration = new Configuration();
+            configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+            configuration.configure();
+            try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                 Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                //Вывод всех групп через массив
+                List<GroupPU> groupPU = session.createQuery("FROM GroupPU where employees= :empInnerGroup and groupname = :nameInnerGroup ", GroupPU.class)
+                                .setParameter("empInnerGroup",empInnerGroup)
+                        .setParameter("nameInnerGroup",nameInnerGroup)
+                        .getResultList();
+                //Далее вставку производим уже с копией
+                System.out.println("Список через коллекцию GroupPU - " + groupPU );
+                List<GroupPU> copy = new ArrayList<>(groupPU);
+                System.out.println("Список через копию коллекции copy  - " + copy );
+                System.out.println("Удаление через копию коллекции -  copy  - " + copy );
+                session.delete(copy.get(copy.size()-1));
+                //session.save(copy);
+
+
+                session.getTransaction().commit();
+                session.close();
+                sessionFactory.close();
+            }
+        }
+        //Метод для получения размера массива Групп.
+            static void massiveGroup() {
+                Configuration configuration = new Configuration();
+                configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+                configuration.configure();
+                try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+                     Session session = sessionFactory.openSession()) {
+                    session.beginTransaction();
+                    //Вывод всех групп через массив
+                    List<GroupPU> groupPU = session.createQuery("FROM GroupPU ", GroupPU.class).getResultList();
+                    System.out.println("В массиве групп : " + groupPU.size() );
+                }
+            }
     }
 
 }
