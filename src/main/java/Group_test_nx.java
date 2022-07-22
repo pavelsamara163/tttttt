@@ -19,6 +19,9 @@ public class Group_test_nx  extends HibernateConnection {
     public   Group_test_nx( ) {
 
     }
+    public   Group_test_nx(String nameOtdel,int[] massGroup ) {
+
+    }
 
     public static String getGroup() {
         // System.out.println(group);
@@ -118,26 +121,50 @@ public class Group_test_nx  extends HibernateConnection {
                 System.out.println(Arrays.toString(new_emp_group));
 
     }
-    static void deleteEmpAndNames_Group (String a,int b){
+    static void deleteEmpAndNames_Group (String a,int b ) {
         String[] name_group = new String[]{group, group1, group2};
         int[] emp_group = new int[]{group_emp, group_emp1, group_emp2};
         //new
-        String [] new_name_group = Arrays.copyOf(name_group,name_group.length);
-        int[] new_emp_group = Arrays.copyOf(emp_group,emp_group.length);
 
-        int i_name_group = new_name_group.length;
-        int s_emp_group = new_emp_group.length;
+        if (group == a & group_emp == b) {
+            String[] new_name_group = Arrays.copyOf(name_group, name_group.length - 1);
+            System.arraycopy(name_group, 1, new_name_group, 0, 2);
+            System.out.println(Arrays.toString(new_name_group));
 
+            int[] new_emp_group = Arrays.copyOf(emp_group, emp_group.length - 1);
+            System.arraycopy(emp_group, 1, new_emp_group, 0, 2);
+            System.out.println(Arrays.toString(new_emp_group));
 
-        new_name_group[i_name_group]  = a ;
-        new_emp_group[s_emp_group] = b;
+        } else if (group1 == a & group_emp1 == b) {
+            System.arraycopy(name_group, 2, name_group, 1, name_group.length - 2);
+            String[] new_name_group2 = Arrays.copyOf(name_group, name_group.length - 1);
+            System.out.println(Arrays.toString(new_name_group2));
 
-        System.arraycopy(name_group,0,emp_group,0,b);
+            System.arraycopy(emp_group, 2, emp_group, 1, emp_group.length - 2);
+            int[] new_emp_group2 = Arrays.copyOf(emp_group, emp_group.length - 1);
+            System.out.println(Arrays.toString(new_emp_group2));
 
-        System.out.println(Arrays.toString(new_name_group));
-        System.out.println(Arrays.toString(new_emp_group));
+        } else {
+            System.arraycopy(name_group, 0, name_group, 0, name_group.length);
+            String[] new_name_group2 = Arrays.copyOf(name_group, name_group.length - 1);
+            System.out.println(Arrays.toString(new_name_group2));
 
+            System.arraycopy(emp_group, 0, emp_group, 0, emp_group.length);
+            int[] new_emp_group2 = Arrays.copyOf(emp_group, emp_group.length - 1);
+            System.out.println(Arrays.toString(new_emp_group2));
+        }
     }
+          static void returnMassivGroup  (){
+              String[] name_group = new String[]{group, group1, group2};
+              int[] emp_group = new int[]{group_emp, group_emp1, group_emp2};
+              System.out.println("Размер массивыа групп : " + name_group.length );
+        }
+
+
+
+
+
+
 
     public static void main(String[] args) {
         Group_test_nx group_test_nx = new Group_test_nx();
@@ -166,7 +193,10 @@ public class Group_test_nx  extends HibernateConnection {
         //11)метод добавления названия группы и ее кол-во сотрудников (путем создания нового массива групп с использованием метода Arrays.copyOf());
          //modifEmpAndNames_Group("Privet_medvDDDD",2231);
         //12)метод удаления группы с указанием названия и кол-ва сотрудников( с использованием методов System.arraycopy, Arrays.copyOf());
-        deleteEmpAndNames_Group(group,group_emp);
+        //deleteEmpAndNames_Group(group2,group_emp2);
+        //13)метод для получения размера массива Групп.
+        returnMassivGroup();
+
 
 
     }
