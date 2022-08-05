@@ -6,14 +6,14 @@ import java.util.List;
 
         */
 
-public  class GroupPIO {
-    public int data;
-    public GroupPIO next; //следующий элемент
-    public GroupPIO prev; // предыдйщий элемент
+public  class DomenPIO {
+    public String name_otdel;
+    public DomenPIO next; //следующий элемент
+    public DomenPIO prev; // предыдйщий элемент
 
 
-    public GroupPIO(int data) {
-        this.data = data;
+    public DomenPIO(String name_otdel) {
+        this.name_otdel = name_otdel;
     }
 
 }
